@@ -1,10 +1,10 @@
-import { Container, Button } from "./styles"
+import { Container, Button, Title } from "./styles"
 import Link from 'next/link'
 
 export default function Dashboard() {
   return (
     <Container>
-      <h1>Dashboard</h1>
+      <Title>Dashboard</Title>
       {/* {' '} == > add space  */}
       {' '}
 
