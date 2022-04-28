@@ -14,14 +14,9 @@ type AppProps = {
 
 export default function App(props: AppProps) {
 
-  const [status, setStatus] = useState({
-  loggedInStatus: 'NOT_LOGGED_IN',
-  user: {}
-  })
-
   return (
     <Container>
-      <Home {...props} loggedInStatus={status.loggedInStatus}/>
+      <Home {...props} />
     </Container>
   )
 }

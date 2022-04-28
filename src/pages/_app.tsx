@@ -1,12 +1,26 @@
-import { useState } from "react" 
+import { useState } from 'react'
 import { GlobalStyle } from '../../styles/globals'
-import App from "./index"
 
+type AppProps = {
+  loggedInStatus: string,
 
-function MyApp({ Component, pageProps }) {
+  user: {
+    email: string
+    password: string
+    password_confirmation: string
+  }
+}
+
+function MyApp({ Component, pageProps }, props: AppProps) {
+
+  const [status, setStatus] = useState({
+    loggedInStatus: 'NOT_LOGGED_IN',
+    user: {}
+    })
+  
   return (
     <>
-      <Component {...pageProps} />
+      <Component {...pageProps} loggedInStatus={status.loggedInStatus} />
       <GlobalStyle />
     </>
     )
