@@ -1,73 +1,82 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Button, FormWrapper, Input, ErrorMessage } from "../../pages/styles";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup'
+import { Button, FormWrapper, Input } from "../../pages/styles";
+import axios from "axios";
 
-export const Registration = () => {
-  // const formInput = {
-  //   email: email,
-  //   password: password,
-  //   password_confirmation: password_confirmation
-  // }
-
-  // form validation rules 
-  const validationSchema = yup.object().shape({
-    name: yup.string()
-    .required('Name needs at least 3 characters')
-    .min(3),
-    
-    email: yup.string()
-           .email()
-           .required(),
-
-    password: yup.string()
-        .required('Password must be at least 6 characters')
-        .min(6),
-    confirmPassword: yup.string()
-        .required('must match password')
-        .oneOf([yup.ref('password')], 'Passwords must match')      
+export  const Registration = () => {
+  const [formData, setFormData] = useState({
+   email: '',
+   password: '',
+   password_confirmation: '',
+   registratioErrors: '',
   })
 
-  const formOptions = { resolver: yupResolver(validationSchema) }
+  
+  // const [email, setEmail] = useState('')
+  // const [password, setPassword] = useState('')
+  // const [password_confirmation, setPassword_confirmation] = useState('')
+  
+  const handleSubmit = (event) => {
 
+    const instance = axios.create({
+      withCredentials: true,
+      baseURL: 'http://localhost:3001/'
+   })
+   
+   instance.post('/registrations', {
+        user: {
+          email: formData.email,
+          password: formData.password,
+          password_confirmation: formData.password_confirmation,
+        }
+     })
+     .then(response => {
+      console.log("registrations response", response)
+      if (response.data.status === "created") {
+        this.props.handleSuccessfulAuth(response.data)
+      }
+    }).catch(error => {
+      console.log("registrations error", error.response)
+    })
 
-  const { register, handleSubmit, formState:{ errors } } = useForm(formOptions)
+    event.preventDefault()
+  }
 
-  const [data, setData] = useState()
 
   return (
     <FormWrapper
       action="submit"
-      onSubmit={handleSubmit((data) => setData(console.log(data)))}
+      onSubmit={handleSubmit}
     >
-      <Input 
-        {...register("FullName")} 
-        placeholder="Full name" 
-        type="name" 
-      />
-      <ErrorMessage>{errors?.name?.message}</ErrorMessage>
 
       <Input
-        {...register("email")}
-        placeholder="Your email"
         type="email"
+        name="email"
+        placeholder="Your email"
+        value={formData.email}
+        onChange={(e) => setFormData({...formData, email: e.target.value})}
+        required
       />
-      <ErrorMessage>{errors?.email?.message}</ErrorMessage>
+      {/* <ErrorMessage>{errors?.email?.message}</ErrorMessage> */}
 
       <Input 
-        {...register("password")} 
+        type="password"
         placeholder="Password" 
-        type="password" 
+        name="password"
+        value={formData.password}
+        onChange={(e) => setFormData({...formData, password: e.target.value})}
+        required 
       />
-      <ErrorMessage>{errors?.password?.message}</ErrorMessage>
+      {/* <ErrorMessage>{errors?.password?.message}</ErrorMessage> */}
 
       <Input
-        {...register("password_confirmation")}
-        placeholder="Confirm your password"
         type="password"
+        placeholder="Confirm your password"
+        name="password_confirmation"
+        value={formData.password_confirmation}
+        onChange={(e) => setFormData({...formData, password_confirmation: e.target.value})}
+        required
       />
-      <ErrorMessage>{errors?.confirmPassword?.message}</ErrorMessage>
+      {/* <ErrorMessage>{errors?.confirmPassword?.message}</ErrorMessage> */}
 
       <Button type="submit"> Register </Button>
     </FormWrapper>

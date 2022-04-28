@@ -16,9 +16,9 @@ export const Button = styled.button`
   background: var(--green);
   color: var(--background);
 
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
+  font-size: 1rem;
+  margin: 1rem;
+  padding: 1rem;
   border-radius: 3px;
   border: none;
 
@@ -40,6 +40,7 @@ export const Input = styled.input `
   border: 0;
   border-radius: 6px;
   padding: 1.5rem;
+  margin-bottom: 1.5rem;
   
   &:first-child {
     margin-top: 1rem;
