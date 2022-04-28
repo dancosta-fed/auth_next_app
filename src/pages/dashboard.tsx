@@ -1,4 +1,4 @@
-import { Container, Button, Title } from "./styles"
+import { Container, Button, Title } from "../../styles/styles"
 import Link from 'next/link'
 
 export default function Dashboard() {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, FormWrapper, Input } from "../../pages/styles";
+import { Button, FormWrapper, Input } from "../../../styles/styles";
 import axios from "axios";
 
 export  const Registration = () => {
@@ -9,13 +9,8 @@ export  const Registration = () => {
    password_confirmation: '',
    registratioErrors: '',
   })
-
   
-  // const [email, setEmail] = useState('')
-  // const [password, setPassword] = useState('')
-  // const [password_confirmation, setPassword_confirmation] = useState('')
-  
-  const handleSubmit = (event) => {
+  const handleSubmit = (event:any) => {
 
     const instance = axios.create({
       withCredentials: true,
@@ -31,8 +26,10 @@ export  const Registration = () => {
      })
      .then(response => {
       console.log("registrations response", response)
-      if (response.data.status === "created") {
-        this.props.handleSuccessfulAuth(response.data)
+      const userInfo = response.data.status
+      
+      if ( userInfo === "created") {
+        userInfo.props.handleSuccessfulAuth(response.data)
       }
     }).catch(error => {
       console.log("registrations error", error.response)
