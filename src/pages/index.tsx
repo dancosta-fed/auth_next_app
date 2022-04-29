@@ -13,6 +13,13 @@ type AppProps = {
   }
 }
 
+// const handleLogin = (data: AppProps) => {
+//   console.log('handleLogin', data)
+  
+//   updateStatus(data)
+// }
+
+
 export default function App(props: AppProps) {
 
   return (

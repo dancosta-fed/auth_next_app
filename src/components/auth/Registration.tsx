@@ -32,6 +32,7 @@ export  const Registration = (props: any) => {
       
       if ( userInfo === "created") {
         props.handleSuccessfulAuth(response.data)
+        
       }
     }).catch(error => {
       console.log("registrations error", error.response)

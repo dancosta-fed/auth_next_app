@@ -15,22 +15,28 @@ type AppProps = {
 
 export default function MyApp({ Component, pageProps }, props: AppProps) {
 
-  const [status, setStatus] = useState({
+  const [status, setStatus ] = useState({
     loggedInStatus: 'Not Logged in',
     user: {}
   })
 
   const router = useRouter()
 
-  const handleSuccessfulAuth = (data: any) => {
+
+  const handleSuccessfulAuth = (data: AppProps) => {
+    setStatus({...status,
+      loggedInStatus: 'Logged in successfully',
+      user: data.user
+    })
+
     router.push('/dashboard')
   }
-   
+
   return (
     <>
       <Component 
         {...pageProps} 
-        loggedInStatus={status.loggedInStatus} 
+        loggedInStatus={status.loggedInStatus}  
         handleSuccessfulAuth={handleSuccessfulAuth} 
       />
       <GlobalStyle />
