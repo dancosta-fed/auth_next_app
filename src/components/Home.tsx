@@ -1,4 +1,3 @@
-import { Registration } from "./auth/Registration"
 import { Container, Title } from "../../styles/styles"
 import { LoggedStatus } from "../../styles/status"
 
@@ -20,7 +19,6 @@ export const Home = (props: AppProps) =>{
       <LoggedStatus>
         <h1>Status: {props.loggedInStatus}</h1>
       </LoggedStatus>
-      <Registration />
     </Container>
   )
 }

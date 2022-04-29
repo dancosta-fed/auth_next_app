@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { GlobalStyle } from '../../styles/globals'
+import { useRouter } from 'next/router'
 
 type AppProps = {
   loggedInStatus: string,
@@ -11,19 +12,29 @@ type AppProps = {
   }
 }
 
-function MyApp({ Component, pageProps }, props: AppProps) {
+
+export default function MyApp({ Component, pageProps }, props: AppProps) {
 
   const [status, setStatus] = useState({
-    loggedInStatus: 'NOT_LOGGED_IN',
+    loggedInStatus: 'Not Logged in',
     user: {}
-    })
-  
+  })
+
+  const router = useRouter()
+
+  const handleSuccessfulAuth = (data: any) => {
+    router.push('/dashboard')
+  }
+   
   return (
     <>
-      <Component {...pageProps} loggedInStatus={status.loggedInStatus} />
+      <Component 
+        {...pageProps} 
+        loggedInStatus={status.loggedInStatus} 
+        handleSuccessfulAuth={handleSuccessfulAuth} 
+      />
       <GlobalStyle />
     </>
     )
 }
 
-export default MyApp
