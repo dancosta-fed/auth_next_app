@@ -14,13 +14,6 @@ type AppProps = {
   }
 }
 
-// const handleLogin = (data: AppProps) => {
-//   console.log('handleLogin', data)
-  
-//   updateStatus(data)
-// }
-
-
 export default function App(props: AppProps) {
 
   return (
@@ -29,7 +22,7 @@ export default function App(props: AppProps) {
 
       <H2>=== Login ===</H2>
       <Login {...props} />
-      
+
       <H2>=== Or Sign up below ===</H2>
       <Registration {...props} />
     </Container>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { GlobalStyle } from '../../styles/globals'
 import { useRouter } from 'next/router'
+import axios from 'axios'
 
 type AppProps = {
   loggedInStatus: string,
@@ -16,7 +17,7 @@ type AppProps = {
 export default function MyApp({ Component, pageProps }, props: AppProps) {
 
   const [status, setStatus ] = useState({
-    loggedInStatus: 'Not Logged in',
+    loggedInStatus: 'Not_Logged_in',
     user: {}
   })
 
@@ -25,13 +26,36 @@ export default function MyApp({ Component, pageProps }, props: AppProps) {
 
   const handleSuccessfulAuth = (data: AppProps) => {
     setStatus({...status,
-      loggedInStatus: 'Logged in successfully',
+      loggedInStatus: 'Logged_in',
       user: data.user
     })
 
     router.push('/dashboard')
   }
 
+  const checkLoginStatus = () => {
+    axios.get('http://localhost:3001/logged_in', { withCredentials: true })
+    .then(response => {
+      console.log("Logged in?", response)
+
+      if (response.data.logged_in && status.loggedInStatus === 'Not_Logged_in'){
+        setStatus({
+          loggedInStatus: 'Logged_in',
+          user: response.data.user
+        })
+      } else if (!response.data.logged_in && status.loggedInStatus === 'Logged_in'){
+        setStatus({
+          loggedInStatus: 'Not_Logged_in',
+          user: {}
+        })
+      }
+    }).catch(err => {
+      console.log("check login error", err) 
+    })
+  }
+
+  checkLoginStatus()
+  
   return (
     <>
       <Component 
