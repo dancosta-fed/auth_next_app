@@ -33,6 +33,22 @@ export const Button = styled.button`
   };
 `;
 
+export const LogOutBtn = styled.button`
+  /* Adapt the colors based on primary prop */
+  background: var(--red);
+  color: var(--background);
+
+  font-size: 1rem;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 3px;
+  border: none;
+
+  &:hover {
+    filter: brightness(0.9);
+  };
+`;
+
 export const FormWrapper = styled.form `
   display: flex;
   flex-direction: column;

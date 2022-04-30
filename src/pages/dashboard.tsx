@@ -30,7 +30,6 @@ export default function Dashboard(props: AppProps) {
       <Link href="/" passHref>
         <Button>Back</Button>
       </Link>
-      {/* <Button onClick={handleLogOutClick}>Log out</Button> */}
     </Container>
     )
 };

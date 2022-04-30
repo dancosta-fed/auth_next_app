@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { GlobalStyle } from '../../styles/globals'
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import { Button } from '../../styles/styles'
+import { LogOutBtn } from '../../styles/styles'
 
 type AppProps = {
   loggedInStatus: string,
@@ -34,37 +34,37 @@ export default function MyApp({ Component, pageProps }, props: AppProps) {
     router.push('/dashboard')
   }
 
-  const checkLoginStatus = () => {
-    axios.get('http://localhost:3001/logged_in', { withCredentials: true })
-    .then(response => {
+  // const checkLoginStatus = () => {
+  //   axios.get('http://localhost:3001/logged_in', { withCredentials: true })
+  //   .then(response => {
 
-      if (response.data.logged_in === true){
-        setStatus({
-          loggedInStatus: 'LOGGED_IN',
-          user: response.data.user
-        })
-      } else if (!response.data.logged_in && status.loggedInStatus === 'LOGGED_IN'){
-        setStatus({
-          loggedInStatus: 'NOT_LOGGED_IN',
-          user: {}
-        })
-      }
-    }).catch(err => {
-      console.log("check login error", err) 
-    })
-  }
+  //     if (response.data.logged_in){
+  //       setStatus({
+  //         loggedInStatus: 'LOGGED_IN',
+  //         user: response.data.user
+  //       })
+  //     } else if (!response.data.logged_in && status.loggedInStatus === 'LOGGED_IN'){
+  //       setStatus({
+  //         loggedInStatus: 'NOT_LOGGED_IN',
+  //         user: {}
+  //       })
+  //     }
+  //   }).catch(err => {
+  //     console.log("check login error", err) 
+  //   })
+  // }
   
-  useEffect(() => {
-    checkLoginStatus()
-  })
+  // useEffect(() => {
+  //   checkLoginStatus()
+  // })
 
   // logout
   const handleLogOut = () => {
     console.log("handleLoggedOut works")
-
+    
     setStatus({...status,
-      loggedInStatus: 'NOT_LOGGED_IN',
-      user: {}
+      user: {},
+      loggedInStatus: 'NOT_LOGGED_IN'
     })
 
     router.push('/')
@@ -82,9 +82,8 @@ export default function MyApp({ Component, pageProps }, props: AppProps) {
         handleSuccessfulAuth={handleSuccessfulAuth} 
         // handleLogOut={handleLogOut}
       />
-      <Button onClick={handleLogOutClick}>Log out</Button>
+      <LogOutBtn onClick={handleLogOutClick}>Log out </LogOutBtn>
       <GlobalStyle />
     </>
     )
 }
-
