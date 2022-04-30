@@ -11,6 +11,12 @@ export const Title = styled.h1 `
   color: var(--text-title);
 `;
 
+export const H2 = styled.h2 `
+  text-align: center;
+  color: var(--text-title);
+  margin: 2rem;
+`;
+
 export const Button = styled.button`
   /* Adapt the colors based on primary prop */
   background: var(--green);
