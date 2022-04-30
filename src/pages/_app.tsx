@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GlobalStyle } from '../../styles/globals'
 import { useRouter } from 'next/router'
 import axios from 'axios'
+import { Button } from '../../styles/styles'
 
 type AppProps = {
   loggedInStatus: string,
@@ -17,7 +18,7 @@ type AppProps = {
 export default function MyApp({ Component, pageProps }, props: AppProps) {
 
   const [status, setStatus ] = useState({
-    loggedInStatus: 'Not_Logged_in',
+    loggedInStatus: 'NOT_LOGGED_IN',
     user: {}
   })
 
@@ -26,7 +27,7 @@ export default function MyApp({ Component, pageProps }, props: AppProps) {
 
   const handleSuccessfulAuth = (data: AppProps) => {
     setStatus({...status,
-      loggedInStatus: 'Logged_in',
+      loggedInStatus: 'LOGGED_IN',
       user: data.user
     })
 
@@ -36,16 +37,15 @@ export default function MyApp({ Component, pageProps }, props: AppProps) {
   const checkLoginStatus = () => {
     axios.get('http://localhost:3001/logged_in', { withCredentials: true })
     .then(response => {
-      console.log("Logged in?", response)
 
-      if (response.data.logged_in && status.loggedInStatus === 'Not_Logged_in'){
+      if (response.data.logged_in === true){
         setStatus({
-          loggedInStatus: 'Logged_in',
+          loggedInStatus: 'LOGGED_IN',
           user: response.data.user
         })
-      } else if (!response.data.logged_in && status.loggedInStatus === 'Logged_in'){
+      } else if (!response.data.logged_in && status.loggedInStatus === 'LOGGED_IN'){
         setStatus({
-          loggedInStatus: 'Not_Logged_in',
+          loggedInStatus: 'NOT_LOGGED_IN',
           user: {}
         })
       }
@@ -53,16 +53,36 @@ export default function MyApp({ Component, pageProps }, props: AppProps) {
       console.log("check login error", err) 
     })
   }
-
-  checkLoginStatus()
   
+  useEffect(() => {
+    checkLoginStatus()
+  })
+
+  // logout
+  const handleLogOut = () => {
+    console.log("handleLoggedOut works")
+
+    setStatus({...status,
+      loggedInStatus: 'NOT_LOGGED_IN',
+      user: {}
+    })
+
+    router.push('/')
+  }
+  
+  const handleLogOutClick = () => {
+    handleLogOut()
+  }
+
   return (
     <>
       <Component 
         {...pageProps} 
         loggedInStatus={status.loggedInStatus}  
         handleSuccessfulAuth={handleSuccessfulAuth} 
+        // handleLogOut={handleLogOut}
       />
+      <Button onClick={handleLogOutClick}>Log out</Button>
       <GlobalStyle />
     </>
     )

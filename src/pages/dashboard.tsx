@@ -4,6 +4,7 @@ import { LoggedStatus } from "../../styles/status"
 
 type AppProps = {
   loggedInStatus: string,
+
   user: {
     email: string
     password: string
@@ -12,6 +13,11 @@ type AppProps = {
 }
 
 export default function Dashboard(props: AppProps) {
+
+  // const handleLogOutClick = () => {
+  //   handleLogOut()
+  // }
+
   return (
     <Container>
       <Title>Dashboard</Title>
@@ -24,7 +30,9 @@ export default function Dashboard(props: AppProps) {
       <Link href="/" passHref>
         <Button>Back</Button>
       </Link>
+      {/* <Button onClick={handleLogOutClick}>Log out</Button> */}
     </Container>
     )
 };
+
 
